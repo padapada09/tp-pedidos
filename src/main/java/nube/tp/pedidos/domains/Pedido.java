@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,13 +23,13 @@ public class Pedido {
 	@Column(columnDefinition = "DATE")
 	public Instant fechaPedido;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pedido", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<DetallePedido> detalles;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	public DetallePedido estado;
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	public EstadoPedido estado;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	public Obra obra;
 
 	@Override

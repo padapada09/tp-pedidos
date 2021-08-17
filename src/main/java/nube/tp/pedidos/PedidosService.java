@@ -17,6 +17,9 @@ public class PedidosService {
 	PedidoRepository pedidoRepository;
 
 	public Pedido add(Pedido pedido) {
+		pedido.detalles.forEach(detalle -> {
+			detalle.pedido = pedido;
+		}); 
 		return pedidoRepository.save(pedido);
 	}
 

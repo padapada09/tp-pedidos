@@ -21,8 +21,12 @@ public class DetallePedido {
 	@Column()
 	public Integer cantidad;
 
-	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	public Producto producto;
+
+	@ManyToOne()
+	@JoinColumn(name = "pedido_id")
+	public Pedido pedido;
 
 	@Override
 	public String toString() {
