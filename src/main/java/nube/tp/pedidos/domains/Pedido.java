@@ -33,7 +33,7 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	public EstadoPedido estado = EstadoPedido.NUEVO;
 
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToOne(cascade = CascadeType.ALL)
 	public Obra obra;
 
 	@Override
