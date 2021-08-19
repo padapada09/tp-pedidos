@@ -8,7 +8,7 @@
 		<version>2.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>nube.tp.pedidos</groupId>
+	<groupId>nube.tp</groupId>
 	<artifactId>pedidos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>pedidos</name>
