@@ -9,33 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity()
-@Table(name = "obra")
-public class Obra {
-	@Id()
+@Entity
+@Table(name = "usuario")
+public class Usuario {
+	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	public Integer id;
 
 	@Column()
-	public String descripcion;
+	public String username;
 
 	@Column()
-	public Float latitud;
-
-	@Column()
-	public Float longitud;
-
-	@Column()
-	public String direccion;
-
-	@Column()
-	public Integer superficie;
+	public String password;
 
 	@Enumerated(EnumType.STRING)
-	public TipoObra tipo;
-
-	@Override
-	public String toString() {
-		return "Obra [descripcion=" + descripcion + ", id=" + id + "]";
-	}
+	public TipoUsuario tipoUsuario = TipoUsuario.CLIENTE;
 }

@@ -1,4 +1,4 @@
-package nube.tp.pedidos.domains;
+package nube.tp.clientes.domains;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

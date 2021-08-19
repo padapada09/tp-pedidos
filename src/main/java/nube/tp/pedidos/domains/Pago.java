@@ -8,21 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity()
-@Table(name = "producto")
-public class Producto {
+@Table(name = "pago")
+public class Pago {
 	@Id()
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	public Integer id;
 
 	@Column()
-	public String descripcion;
-
-	@Column()
-	public Double precio;
-
-	@Override
-	public String toString() {
-		return "Producto [descripcion=" + descripcion + ", detalle=" + id + ", precio=" + precio
-				+ "]";
-	}
+	public Float monto;
 }

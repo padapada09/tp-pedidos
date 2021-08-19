@@ -1,4 +1,4 @@
-package nube.tp.pedidos.domains;
+package nube.tp.clientes.domains;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity()
@@ -35,6 +36,14 @@ public class Cliente {
 	public Boolean habilitadoOnline;
 
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name = "cliente_id", nullable = true)
+	@JoinColumn(name = "cliente_id", nullable = false)
 	public List<Obra> obras;
+
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name = "cliente_id", nullable = false)
+	public List<Pago> pagos;
+
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name = "usuario_id", nullable = false)
+	public Usuario usuario;
 }
