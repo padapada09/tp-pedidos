@@ -1,4 +1,4 @@
-package nube.tp.clientes.domains;
+package nube.tp.pedidos.domains;
 
 import java.util.ArrayList;
 import java.util.List;

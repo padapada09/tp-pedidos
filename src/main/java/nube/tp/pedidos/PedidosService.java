@@ -27,9 +27,10 @@ public class PedidosService {
 
 	public Pedido add(Pedido pedido, Integer clienteId) {
 		Cliente cliente = clienteRepository.findById(clienteId).get();
+		cliente.obras.add(pedido.obra);
+		cliente = clienteRepository.save(cliente);
+		pedido.obra = cliente.obras.get(cliente.obras.size() -1 );
 		Pedido savedPedido = pedidoRepository.save(pedido);
-		cliente.obras.add(savedPedido.obra);
-		clienteRepository.save(cliente);
 		return savedPedido;
 	}
 

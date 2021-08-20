@@ -1,4 +1,4 @@
-package nube.tp.clientes.domains;
+package nube.tp.pedidos.domains;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,11 +20,10 @@ public class DetallePedido {
 	public Integer cantidad;
 
 	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	public Producto producto;
+	public Material material;
 
 	@Override
 	public String toString() {
-		return "DetallePedido [cantidad=" + cantidad + ", id=" + id + ", producto=" + producto
-				+ "]";
+		return "DetallePedido [cantidad=" + cantidad + ", id=" + id + ", material=" + material + "]";
 	}
 }

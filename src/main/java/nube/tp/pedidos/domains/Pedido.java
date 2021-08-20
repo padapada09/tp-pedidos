@@ -1,4 +1,4 @@
-package nube.tp.clientes.domains;
+package nube.tp.pedidos.domains;
 
 import java.time.Instant;
 import java.util.List;

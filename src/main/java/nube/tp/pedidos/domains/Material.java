@@ -1,4 +1,4 @@
-package nube.tp.clientes.domains;
+package nube.tp.pedidos.domains;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity()
-@Table(name = "producto")
-public class Producto {
+@Table(name = "material")
+public class Material {
 	@Id()
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	public Integer id;
@@ -18,11 +18,21 @@ public class Producto {
 	public String descripcion;
 
 	@Column()
-	public Double precio;
+	public Float precio;
+
+	@Column()
+	public String nombre;
+
+	@Column()
+	public Integer stockActual;
+
+	@Column()
+	public Integer stockMinimo;
+
+	public String unidad;
 
 	@Override
 	public String toString() {
-		return "Producto [descripcion=" + descripcion + ", detalle=" + id + ", precio=" + precio
-				+ "]";
+		return "Material [descripcion=" + descripcion + ", detalle=" + id + ", precio=" + precio + "]";
 	}
 }
