@@ -7,10 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nube.tp.pedidos.domains.Cliente;
+import nube.tp.pedidos.domains.DetalleDTO;
 import nube.tp.pedidos.domains.DetallePedido;
+import nube.tp.pedidos.domains.Material;
+import nube.tp.pedidos.domains.Obra;
 import nube.tp.pedidos.domains.Pedido;
+import nube.tp.pedidos.domains.PedidoDTO;
 import nube.tp.pedidos.repositories.ClienteRepository;
 import nube.tp.pedidos.repositories.DetallePedidoRepository;
+import nube.tp.pedidos.repositories.MaterialRepository;
+import nube.tp.pedidos.repositories.ObraRepository;
 import nube.tp.pedidos.repositories.PedidoRepository;
 
 @Service
@@ -25,12 +31,17 @@ public class PedidosService {
 	@Autowired
 	ClienteRepository clienteRepository;
 
-	public Pedido add(Pedido pedido, Integer clienteId) {
-		Cliente cliente = clienteRepository.findById(clienteId).get();
-		cliente.obras.add(pedido.obra);
-		cliente = clienteRepository.save(cliente);
-		pedido.obra = cliente.obras.get(cliente.obras.size() -1 );
-		Pedido savedPedido = pedidoRepository.save(pedido);
+	@Autowired
+	MaterialRepository materialRepository;
+
+	@Autowired
+	ObraRepository obraRepository;
+
+	public Pedido add(PedidoDTO pedidoDTO) {
+		Obra obra = obraRepository.findById(pedidoDTO.obraId).get();
+		Pedido nuevoPedido = new Pedido();
+		nuevoPedido.obra = obra;
+		Pedido savedPedido = pedidoRepository.save(nuevoPedido);
 		return savedPedido;
 	}
 
@@ -45,13 +56,23 @@ public class PedidosService {
 		return "Deleted successfully";
 	}
 
-	public Pedido addDetalle(DetallePedido detalle, Integer pedidoId) throws ControllerException {
+	public Pedido addDetalle(DetalleDTO detalleDTO, Integer pedidoId) throws ControllerException {
 		Optional<Pedido> optionalPedido = pedidoRepository.findById(pedidoId);
-		if (optionalPedido.isPresent()) {
+		Optional<Material> optionalMaterial = materialRepository.findById(detalleDTO.materialId);
+		if (optionalPedido.isPresent() && optionalMaterial.isPresent()) {
 			Pedido pedido = optionalPedido.get();
-			pedido.detalles.add(detalle);
-			pedidoRepository.save(pedido);
-			return pedido;
+			Material material = optionalMaterial.get();
+			if (material.stockActual >= detalleDTO.cantidad && material.stockMinimo <= material.stockActual - detalleDTO.cantidad) {
+				DetallePedido nuevoDetalle = new DetallePedido();
+				material.stockActual = material.stockActual - detalleDTO.cantidad;
+				nuevoDetalle.material = material;
+				nuevoDetalle.cantidad = detalleDTO.cantidad;
+				pedido.detalles.add(nuevoDetalle);
+				pedidoRepository.save(pedido);
+				return pedido;
+			} else {
+				throw new ControllerException("Parece que no hay stock suficiente.");	
+			}
 		} else {
 			throw new ControllerException("Parece que el pedido no existe.");
 		}
